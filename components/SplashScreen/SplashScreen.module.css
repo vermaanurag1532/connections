@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 10;
+  }
+  
+  .gif {
+    width: 100%; /* Adjust width as needed */
+    height: auto;
+  }
+  

@@ -1,0 +1,104 @@
+.header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  padding: 1rem;
+}
+
+.logo img {
+  width: 200px;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: black;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  box-shadow: 0px 0px 25px 4px rgba(64, 17, 95, 0.2);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 35%;
+}
+
+.sidebar ul li {
+  padding: 0.5rem;
+  margin-top: 20%;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.topNavbar,
+.bottomNavbar {
+  display: none; /* Hide both top and bottom navbars by default */
+  width: 100%;
+  background-color: #333;
+  position: fixed;
+  z-index: 1000;
+}
+
+.topNavbar {
+  top: 0;
+}
+
+.bottomNavbar {
+  bottom: 0;
+}
+
+.bottomNavbar ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+}
+
+.bottomNavbar ul li {
+  padding: 1rem;
+}
+
+.bottomNavbar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hamburger {
+  display: none; /* Hide hamburger menu by default */
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none; /* Hide sidebar on small screens */
+  }
+
+  .logo img {
+      width: 100px;
+    }
+
+  .topNavbar,
+  .bottomNavbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    padding: 1rem;
+  }
+}

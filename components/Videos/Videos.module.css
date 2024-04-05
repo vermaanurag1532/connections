@@ -1,0 +1,135 @@
+
+
+/* Container for all categories */
+.container {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+/* Category section styling */
+.category {
+  margin-bottom: 40px;
+}
+
+/* Category title styling */
+.categoryTitle {
+  color: #dfd9d9;
+  font-size: 24px;
+  margin-bottom: 16px;
+  padding-left: 10px; /* Align with the carousel items */
+}
+
+/* Carousel Styling */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px; /* Space between carousel items */
+}
+
+/* Video card styling */
+.videoCard {
+  flex: 0 0 220px; /* width of the cards, and preventing them from shrinking */
+  background: #181717;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.videoCard:hover {
+  transform: scale(1.02); /* Slightly increase size on hover */
+}
+
+/* Thumbnail styling */
+.thumbnail {
+  width: 100%;
+  height: 125px;
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+  border-radius: 10px;
+}
+
+/* Video info styling */
+.videoInfo {
+  padding: 10px;
+  flex-grow: 1; /* Allow the info section to fill the space */
+}
+
+/* Title and description styling */
+.videoTitle,
+.videoDescription,
+.uploadedBy {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds '...' to text that's too long */
+  margin-bottom: 5px;
+}
+
+.videoDescription {
+  font-size: 14px;
+  color: #666;
+  height: 38px; /* Ensure uniform height for all descriptions */
+  overflow: hidden;
+}
+
+.uploadedBy {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .container {
+    margin-left: 25%;
+    margin-top: 20px;
+  }
+
+  .videoCard {
+    flex: 0 0 300px; /* Larger cards on wider screens */
+  }
+
+  .thumbnail {
+    height: 169px; /* Adjusting height according to new card size */
+  }
+}
+
+/* Hide scrollbar for cleaner carousel */
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.modalVideoPlayer {
+  width: 80vw;
+  max-width: 600px;
+  height: auto;
+}
+
+.closeModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
