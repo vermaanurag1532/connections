@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Videos.module.css';
 import { app } from '../../firebase/Config/firebase';
-import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-// Your Firebase configuration
 const db = getFirestore(app);
 
 interface Video {
@@ -25,6 +23,8 @@ const Videos: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -66,6 +66,24 @@ const Videos: React.FC = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    const filterCategories = () => {
+      if (!searchQuery) {
+        setFilteredCategories(categories);
+      } else {
+        const filtered = categories.map((category) => ({
+          ...category,
+          videos: category.videos.filter((video) =>
+            video.title.toLowerCase().includes(searchQuery.toLowerCase())
+          ),
+        })).filter((category) => category.videos.length > 0);
+        setFilteredCategories(filtered);
+      }
+    };
+
+    filterCategories();
+  }, [searchQuery, categories]);
+
   const handleVideoSelect = (video: Video) => {
     setSelectedVideo(video);
   };
@@ -74,11 +92,19 @@ const Videos: React.FC = () => {
     setSelectedVideo(null);
   };
 
-  if (loading) return <div className={styles.loading}>Loading...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-
   return (
     <div className={styles.container}>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search Videos..."
+          className={styles.searchInput}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      {loading && <div className={styles.loading}>Loading...</div>}
+      {error && <div className={styles.error}>{error}</div>}
       {selectedVideo && (
         <div className={styles.modal}>
           <video controls autoPlay className={styles.modalVideoPlayer}>
@@ -90,7 +116,7 @@ const Videos: React.FC = () => {
           </button>
         </div>
       )}
-      {categories.map((category) => (
+      {filteredCategories.map((category) => (
         <div key={category.name} className={styles.category}>
           <h2 className={styles.categoryTitle}>{category.name}</h2>
           <div className={styles.carousel}>

@@ -41,6 +41,11 @@ const Header: React.FC = () => {
                         </Link>
                     </li>
                     <li>
+                        <Link href="/Explore">
+                            Explore
+                        </Link>
+                    </li>
+                    <li>
                         <Link href="/create">
                             Create
                         </Link>
@@ -76,6 +81,11 @@ const Header: React.FC = () => {
                     <li>
                         <Link href="/loops">
                             Loops
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/explore">
+                            Explore
                         </Link>
                     </li>
                     <li>

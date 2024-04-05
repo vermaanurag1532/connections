@@ -1,4 +1,26 @@
 /* Container for all categories */
+
+.searchContainer {
+  margin-bottom: 50px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 25px 4px rgba(64, 17, 95, 0.2);
+  background-color: black;
+  color: #aaa;
+  border: none; /* Remove the border */
+  outline: none; /* Remove the outline when focused */
+}
+
+
+.searchInput::placeholder {
+  color: #aaa;
+}
+
+
 .container {
   position: relative;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

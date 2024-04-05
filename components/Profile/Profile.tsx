@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebase/Config/firebase';
+import { auth, app } from '../../firebase/Config/firebase';
 import styles from './Profile.module.css';
+import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+
+const db = getFirestore(app);
 
 const Profile: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -14,14 +17,51 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
-    if (user) {
-      const { displayName, photoURL } = user;
-      setUserData({ ...userData, username: displayName || '', profilePic: photoURL || '' });
-    }
+    const fetchUserData = async () => {
+      if (user) {
+        const { displayName, photoURL, uid } = user;
+
+        try {
+          // Fetch user data from Firestore
+          const userDocRef = doc(db, 'users', uid);
+          const userDocSnap = await getDoc(userDocRef);
+          
+          if (userDocSnap.exists()) {
+            const userDataFromFirestore = userDocSnap.data();
+            if (userDataFromFirestore) {
+              // Update state with fetched user data
+              setUserData({
+                ...userData,
+                username: userDataFromFirestore.name,
+                profilePic: userDataFromFirestore.image,
+                bio: userDataFromFirestore.about
+              });
+
+              // Fetch followers count
+              const followersQuery = query(collection(db, 'followers'), where('user', '==', uid));
+              const followersSnapshot = await getDocs(followersQuery);
+              const followersCount = followersSnapshot.size;
+              setUserData(prevState => ({ ...prevState, followers: followersCount }));
+
+              // Fetch following count
+              const followingQuery = query(collection(db, 'following'), where('user', '==', uid));
+              const followingSnapshot = await getDocs(followingQuery);
+              const followingCount = followingSnapshot.size;
+              setUserData(prevState => ({ ...prevState, following: followingCount }));
+            }
+          } else {
+            console.log('User data not found in Firestore for UID:', uid);
+          }
+        } catch (error) {
+          console.error('Error fetching user data from Firestore:', error);
+        }
+      }
+    };
+
+    fetchUserData();
   }, [user]);
 
   const handleEditProfilePic = () => {
-    // Trigger the file input click event
     const fileInput = document.getElementById('profilePicInput');
     if (fileInput) {
       fileInput.click();
@@ -29,14 +69,12 @@ const Profile: React.FC = () => {
   };
 
   const handleProfilePicClick = () => {
-    // Implement logic to enlarge profile picture
     alert('Enlarging profile picture functionality will be implemented here.');
   };
 
   const handleProfilePicChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Perform upload logic here
       alert('Uploading profile picture...');
     }
   };

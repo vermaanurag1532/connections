@@ -6,11 +6,24 @@
   height: 100vh;
 }
 
+@keyframes shadowPulse {
+  0% {
+    box-shadow: 0px 0px 25px 4px rgba(126, 185, 233, 0.2), 0 4px 8px rgba(91, 125, 238, 0.1);
+  }
+  50% {
+    box-shadow: 0px 0px 35px 8px rgba(126, 185, 233, 0.4), 0 6px 12px rgba(91, 125, 238, 0.2);
+  }
+  100% {
+    box-shadow: 0px 0px 25px 4px rgba(126, 185, 233, 0.2), 0 4px 8px rgba(91, 125, 238, 0.1);
+  }
+}
+
 .cardContainer {
   width: 350px;
-  box-shadow: 0px 0px 25px 4px rgba(126, 185, 233, 0.2), 0 4px 8px rgba(91, 125, 238, 0.1); /* Add desired box shadow */
   border-radius: 8px;
+  animation: shadowPulse 3s infinite; /* Adjust duration as needed */
 }
+
 
 .logoContainer {
   display: flex;
@@ -70,3 +83,22 @@
 .button + .button {
   margin-top: 10px;
 }
+
+.bottomLinks {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forgotPassword,
+.register {
+  font-size: 14px;
+  cursor: pointer;
+  margin: 3%;
+}
+
+.register:hover,
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
