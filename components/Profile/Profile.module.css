@@ -1,5 +1,17 @@
 /* Profile.module.css */
 .container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,6 +23,48 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  
+  .profilePicContainer {
+    cursor: pointer;
+    margin-bottom: 5%;
+  }
+  
+  .profilePic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  .profilePic:hover {
+    transform: scale(1.1);
+  }
+  
+  .userInfo {
+    text-align: center;
+  }
+  
+  .userInfo h2 {
+    margin-bottom: 10px;
+  }
+  
+  .userInfo p {
+    margin: 5px 0;
+  }
+  
+  /* Sidebar Navigation Styles */
+  @media (min-width: 768px) {
+    .container {
+      margin-left: 250px; /* Adjust sidebar width */
+      margin-top: 5%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .container {
+      margin-top: 120px; /* Add top margin on small screens */
+    }
   }
   
   .profilePicContainer {

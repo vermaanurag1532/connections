@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebase/firebase';
+import { auth } from '../../firebase/Config/firebase';
 import styles from './Profile.module.css';
 
 const Profile: React.FC = () => {

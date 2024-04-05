@@ -1,7 +1,7 @@
 // Layout.tsx
 import React, { ReactElement, useState, useEffect } from 'react';
 import SplashScreen from '../SplashScreen';
-import { auth } from '../../firebase/firebase';
+import { auth } from '../../firebase/Config/firebase';
 import Auth from '../Auth';
 import { User } from 'firebase/auth';
 import Header from '../Header';

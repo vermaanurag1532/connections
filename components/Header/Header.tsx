@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { auth } from '../../firebase/firebase'; // Import Firebase authentication
+import { auth } from '../../firebase/Config/firebase'; // Import Firebase authentication
 import styles from './Header.module.css';
 
 const Header: React.FC = () => {

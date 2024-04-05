@@ -1,8 +1,11 @@
-// Videos.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Videos.module.css';
+import { app } from '../../firebase/Config/firebase';
+import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { auth, GoogleAuthProvider } from '../../firebase/firebase';
+
+// Your Firebase configuration
+const db = getFirestore(app);
 
 interface Video {
   title: string;
@@ -22,7 +25,6 @@ const Videos: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const db = getFirestore();
 
   useEffect(() => {
     const fetchCategories = async () => {
