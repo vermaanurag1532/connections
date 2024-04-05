@@ -1,22 +1,8 @@
+// Videos.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './Videos.module.css';
-import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-
-// Your Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBt1eGpktblIAOrI68tgPxCq9Fsa1xdSXI",
-  authDomain: "while-2.firebaseapp.com",
-  databaseURL: "https://while-2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "while-2",
-  storageBucket: "while-2.appspot.com",
-  messagingSenderId: "759556546667",
-  appId: "1:759556546667:web:9cd21fba85ac5d29e3912e"
-};
-
-// Initialize Firebase
-!getApps().length && initializeApp(firebaseConfig);
-const db = getFirestore();
+import { auth, GoogleAuthProvider } from '../../firebase/firebase';
 
 interface Video {
   title: string;
@@ -36,6 +22,7 @@ const Videos: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const db = getFirestore();
 
   useEffect(() => {
     const fetchCategories = async () => {

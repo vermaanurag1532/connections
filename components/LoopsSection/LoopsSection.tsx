@@ -1,21 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './LoopsSections.module.css';
-import { initializeApp, getApps } from 'firebase/app';
+import { app } from '../../firebase/firebase'; // Import the initialized Firebase app
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBt1eGpktblIAOrI68tgPxCq9Fsa1xdSXI",
-  authDomain: "while-2.firebaseapp.com",
-  databaseURL: "https://while-2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "while-2",
-  storageBucket: "while-2.appspot.com",
-  messagingSenderId: "759556546667",
-  appId: "1:759556546667:web:9cd21fba85ac5d29e3912e"
-};
-
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
 
 interface Video {

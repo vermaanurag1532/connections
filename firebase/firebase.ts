@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
 
 // Export the Auth instance and GoogleAuthProvider
-export { auth, GoogleAuthProvider };
+export { auth, GoogleAuthProvider, app };
 
 // Additional exports for signInWithEmailAndPassword and signInWithPopup
 export { signInWithEmailAndPassword, signInWithPopup };
