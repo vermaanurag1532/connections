@@ -10,7 +10,7 @@ const db = getFirestore();
 const Auth: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, loading, error] = useAuthState(auth); // Added useAuthState hook
+  const [user, loading, error] = useAuthState(auth); 
 
   const handleEmailLogin = async () => {
     try {

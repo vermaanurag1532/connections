@@ -3,8 +3,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: auto; /* Full width */
+  height: 100%; /* Adjust height as needed */
+  z-index: 1000; /* Ensure header is above other elements */
 }
 
 .logo {

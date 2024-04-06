@@ -1,0 +1,161 @@
+/* Explore.css */
+
+/* Main container */
+.exploreContainer {
+  padding: 20px;
+  margin-left: 250px; /* For big screens with side navbar */
+  z-index: 1;
+}
+
+/* Search input and button */
+.searchContainer {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchInput {
+  width: 70%;
+  padding: 10px;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  background-color: black;
+  box-shadow: 0px 0px 25px 4px rgba(64, 17, 95, 0.2);
+  border: none;
+  outline: rgba(64, 17, 95, 0.2);
+  color: #777;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.searchInput:focus {
+  border-color: #007bff; /* Change border color on focus */
+}
+
+.searchButton {
+  width: 25%;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.searchButton:hover {
+  background-color: #0056b3;
+}
+
+/* Category buttons */
+.categoryButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.categoryButton {
+  padding: 10px 20px;
+  background-color: rgba(64, 17, 95, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 49%;
+}
+
+.categoryButton:hover {
+  background-color: rgba(49, 78, 194, 0.2);
+}
+
+.selectedTab{
+  margin-bottom: 5%;
+}
+
+/* Search results */
+.searchResults {
+  display: grid;
+}
+
+/* Explore.module.css */
+
+/* Search result container */
+.searchResult {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: black;
+  box-shadow: 0px 0px 25px 4px rgba(64, 17, 95, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin-bottom: 3%; /* Decrease the margin between search results */
+  padding: 1.5%;
+}
+
+.searchResult:hover {
+  transform: translateY(-5px);
+}
+
+/* Profile image */
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Make the profile image circular */
+  object-fit: cover;
+  margin-left: 3%; /* Adjust the margin for profile image */
+}
+
+/* Name */
+.name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-left: 4%; /* Adjust the margin for name */
+}
+
+
+/* Media queries for smaller screens */
+@media screen and (max-width: 768px) {
+  .exploreContainer {
+    padding: 20px;
+    margin: 100px auto; /* Center the container */
+  }
+
+  .searchContainer {
+    flex-direction: column; /* Display search input and button in a column */
+    margin-bottom: 10px;
+  }
+
+  .searchInput {
+    width: 100%; /* Take full width */
+    margin-bottom: 10px;
+  }
+
+  .searchButton,
+  .categoryButton {
+    width: 100%; /* Take full width */
+  }
+
+  .searchResults {
+    grid-gap: 15px;
+    margin-bottom: 20px; /* Increase margin between search results and other elements */
+  }
+
+  .searchResult {
+    margin-bottom: 5%; /* Increase margin between search results on smaller screens */
+  }
+
+  .profileImage {
+    width: 20px; /* Decrease profile image size for smaller screens */
+    height: 20px;
+    margin-left: 3%;
+  }
+
+  .name {
+    font-size: 14px; /* Decrease font size for name on smaller screens */
+    margin-left: 3%;
+  }
+}
