@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
     profilePic: '',
     followers: 0,
     following: 0,
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vestibulum facilisis nisl, nec fermentum nulla.',
+    bio: 'We are welcoming you in WHILE',
   });
 
   useEffect(() => {
@@ -66,30 +66,11 @@ const Profile: React.FC = () => {
     }
   };
 
-  const handleProfilePicClick = () => {
-    alert('Enlarging profile picture functionality will be implemented here.');
-  };
-
-  const handleProfilePicChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      alert('Uploading profile picture...');
-    }
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.profileInfo}>
-        <div className={styles.profilePicContainer} onClick={handleProfilePicClick}>
+        <div className={styles.profilePicContainer}>
           <img src={userData.profilePic} alt="Profile" className={styles.profilePic} />
-          <div className={styles.editProfilePic} onClick={handleEditProfilePic}>Edit</div>
-          <input
-            id="profilePicInput"
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={handleProfilePicChange}
-          />
         </div>
         <div className={styles.userInfo}>
           <h2>{userData.username}</h2>
