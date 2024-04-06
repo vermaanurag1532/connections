@@ -38,15 +38,13 @@ const Profile: React.FC = () => {
               });
 
               // Fetch followers count
-              const followersQuery = query(collection(db, 'followers'), where('user', '==', uid));
-              const followersSnapshot = await getDocs(followersQuery);
-              const followersCount = followersSnapshot.size;
+              const followersQuery  = await getDocs(collection(userDocRef , 'follower'));
+              const followersCount = followersQuery.size;
               setUserData(prevState => ({ ...prevState, followers: followersCount }));
 
               // Fetch following count
-              const followingQuery = query(collection(db, 'following'), where('user', '==', uid));
-              const followingSnapshot = await getDocs(followingQuery);
-              const followingCount = followingSnapshot.size;
+              const followingQuery = await getDocs(collection(userDocRef , 'following'));
+              const followingCount = followingQuery.size;
               setUserData(prevState => ({ ...prevState, following: followingCount }));
             }
           } else {

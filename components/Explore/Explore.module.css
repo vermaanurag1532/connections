@@ -74,6 +74,10 @@
   margin-bottom: 5%;
 }
 
+.clickedProfile {
+  margin: 4% 0%;
+}
+
 /* Search results */
 .searchResults {
   display: grid;

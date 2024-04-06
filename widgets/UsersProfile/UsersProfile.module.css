@@ -1,0 +1,85 @@
+/* Profile.module.css */
+
+.profileContainer {
+    margin: 20px;
+  }
+  
+  .profileHeader {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .profileInfo {
+    flex: 1;
+  }
+  
+  .profileInfo h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .profileInfo p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .followInfo {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .followInfo p {
+    margin-right: 20px;
+  }
+  
+  .followButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .followButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Media queries for responsiveness */
+  @media screen and (max-width: 768px) {
+    .profileHeader {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    .profileImage {
+      width: 150px;
+      height: 150px;
+      margin-right: 5%;
+      margin-bottom: 20px;
+    }
+  
+    .followInfo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .followInfo p {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .followButton {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  

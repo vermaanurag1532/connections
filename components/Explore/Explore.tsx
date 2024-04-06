@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, getFirestore, DocumentData } from 'firebase/firestore';
 import { app } from '../../firebase/Config/firebase';
 import styles from "./Explore.module.css";
+import UsersProfile from '../../widgets/UsersProfile'; // Import UsersProfile component
+import { useRouter } from 'next/router'; // Import useRouter from next/router
 
 const db = getFirestore(app);
 
@@ -12,16 +14,17 @@ const Explore = () => {
   const [peopleResults, setPeopleResults] = useState<DocumentData[]>([]);
   const [communitiesResults, setCommunitiesResults] = useState<DocumentData[]>([]);
   const [selectedTab, setSelectedTab] = useState('People');
+  const [selectedUserUid, setSelectedUserUid] = useState<string | null>(null); // State to store the selected user's UID
+  const router = useRouter(); // Initialize useRouter hook
 
   useEffect(() => {
     if (searchQuery.trim() !== '') {
-      handleSearch(); // Automatically trigger search on component mount and whenever searchQuery changes
+      handleSearch();
     } else {
-      // Clear the results if search query is empty
       setPeopleResults([]);
       setCommunitiesResults([]);
     }
-  }, [searchQuery]); // useEffect dependency on searchQuery
+  }, [searchQuery]);
 
   const handleSearch = async () => {
     try {
@@ -34,6 +37,7 @@ const Explore = () => {
         })
         .map(doc => doc.data());
       setPeopleResults(usersData);
+      console.log({usersData});
   
       const communitiesQuery = collection(db, 'communities');
       const communitiesSnapshot = await getDocs(communitiesQuery);
@@ -51,6 +55,14 @@ const Explore = () => {
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
+  };
+
+  const handleProfileClick = (uid: string) => {
+    setSelectedUserUid(uid);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedUserUid(null);
   };
 
   return (
@@ -78,13 +90,20 @@ const Explore = () => {
           Communities
         </button>
       </div>
+      <div className={styles.clickedProfile}>
+      {selectedUserUid && <UsersProfile uid={selectedUserUid} onClose={handleCloseProfile} />}
+      </div>
       <div>
         {searchQuery.trim() !== '' && (
           <>
             <h2 className={styles.selectedTab}>{selectedTab}</h2>
             <div className={styles.searchResults}>
               {selectedTab === 'People' && peopleResults.map((result: DocumentData) => (
-                <div className={styles.searchResult} key={result.id}>
+                <div 
+                  className={styles.searchResult} 
+                  key={result.id} 
+                  onClick={() => handleProfileClick(result.id)}
+                >
                   <img src={result.image} alt="Profile" className={styles.profileImage} />
                   <p className={styles.name}>{result.name}</p>
                 </div>
