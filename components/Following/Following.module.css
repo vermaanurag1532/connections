@@ -19,12 +19,17 @@
   margin-top: 5%;
 }
 
+.clickedProfile {
+  margin: 4% 0%;
+}
+
 .following {
   display: flex;
   flex-direction: row;
   gap: 25px;
   align-items: center;
   box-shadow: 0px 0px 25px 4px rgba(64, 17, 95, 0.2);
+  margin-top: 2%;
 }
 
 .avatar {

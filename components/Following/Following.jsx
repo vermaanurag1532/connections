@@ -2,53 +2,67 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, getFirestore, doc, getDoc } from 'firebase/firestore';
 import { app, auth } from '../../firebase/Config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import styles from './Following.module.css'; // Adjust the path as necessary
+import styles from './Following.module.css';
+import UsersProfile from '../../widgets/UsersProfile'
 
 const db = getFirestore(app);
 
-const Following = () => {
+const Followers = () => {
   const [user] = useAuthState(auth);
-  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [selectedUserUid, setSelectedUserUid] = useState();
 
   useEffect(() => {
-    const fetchFollowing = async () => {
+    const fetchFollowers = async () => {
       const userId = user?.uid;
       if (!userId) return;
 
-      const followingRef = collection(db, 'users', userId, 'following');
-      const snapshot = await getDocs(followingRef);
-      const followingIdList = snapshot.docs.map(doc => doc.id); // Extract following IDs
+      const followersRef = collection(db, 'users', userId, 'following');
+      const snapshot = await getDocs(followersRef);
+      const followersIdList = snapshot.docs.map(doc => doc.id); // Extract follower IDs
 
-      // Fetch each following user's details from the 'users' collection
-      const followingDetailsPromises = followingIdList.map(async (followingId) => {
-        const userDocRef = doc(db, 'users', followingId);
+      // Fetch each follower's details from the 'users' collection
+      const followersDetailsPromises = followersIdList.map(async (followerId) => {
+        const userDocRef = doc(db, 'users', followerId);
         const userDocSnapshot = await getDoc(userDocRef);
         if (userDocSnapshot.exists()) {
-          return { id: followingId, ...userDocSnapshot.data() }; // Return following user details
+          return { id: followerId, ...userDocSnapshot.data() }; // Return follower details
         }
         return null; // In case the user document doesn't exist
       });
 
-      const followingDetails = await Promise.all(followingDetailsPromises);
-      const filteredFollowing = followingDetails.filter(Boolean); // Remove nulls if any
-      setFollowing(filteredFollowing);
+      const followersDetails = await Promise.all(followersDetailsPromises);
+      const filteredFollowers = followersDetails.filter(Boolean); // Remove nulls if any
+      setFollowers(filteredFollowers);
+      console.log({followers})
     };
 
     if (user) {
-      fetchFollowing();
+      fetchFollowers();
     }
   }, [user]);
 
-  if (!user) return <div>Please log in to see who you're following.</div>;
+  const handleProfileClick = (uid) => {
+    setSelectedUserUid(uid);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedUserUid(null);
+  };
+
+  if (!user) return <div>Please log in to see your followers.</div>;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Following</h2>
       <div className={styles.followingList}>
-        {following.map(user => (
-          <div key={user.id} className={styles.following}>
-            <img src={user.image || '/defaultAvatarUrl.png'} alt={user.name || 'User'} className={styles.avatar} />
-            <p className={styles.name}>{user.name || 'Anonymous'}</p>
+      <div className="clickedProfile">
+         {selectedUserUid && <UsersProfile ProfileUserId={selectedUserUid} onClose={handleCloseProfile} />}
+      </div>
+        {followers.map(follower => (
+          <div key={follower.id} className={styles.following} onClick={() => handleProfileClick(follower.id)}>
+            <img src={follower.image || '/defaultAvatarUrl.png'} alt={follower.name || 'Follower'} className={styles.avatar} />
+            <p className={styles.name}>{follower.name || 'Anonymous'}</p>
           </div>
         ))}
       </div>
@@ -56,4 +70,4 @@ const Following = () => {
   );
 };
 
-export default Following;
+export default Followers;

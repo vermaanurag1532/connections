@@ -3,12 +3,14 @@ import { collection, getDocs, getFirestore, doc, getDoc } from 'firebase/firesto
 import { app, auth } from '../../firebase/Config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from './Followers.module.css';
+import UsersProfile from '../../widgets/UsersProfile'
 
 const db = getFirestore(app);
 
 const Followers = () => {
   const [user] = useAuthState(auth);
   const [followers, setFollowers] = useState([]);
+  const [selectedUserUid, setSelectedUserUid] = useState();
 
   useEffect(() => {
     const fetchFollowers = async () => {
@@ -40,14 +42,25 @@ const Followers = () => {
     }
   }, [user]);
 
+  const handleProfileClick = (uid) => {
+    setSelectedUserUid(uid);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedUserUid(null);
+  };
+
   if (!user) return <div>Please log in to see your followers.</div>;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Followers</h2>
       <div className={styles.followersList}>
+      <div className="clickedProfile">
+         {selectedUserUid && <UsersProfile ProfileUserId={selectedUserUid} onClose={handleCloseProfile} />}
+      </div>
         {followers.map(follower => (
-          <div key={follower.id} className={styles.follower}>
+          <div key={follower.id} className={styles.follower} onClick={() => handleProfileClick(follower.id)}>
             <img src={follower.image || '/defaultAvatarUrl.png'} alt={follower.name || 'Follower'} className={styles.avatar} />
             <p className={styles.name}>{follower.name || 'Anonymous'}</p>
           </div>
