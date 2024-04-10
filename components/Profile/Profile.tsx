@@ -74,8 +74,8 @@ const Profile: React.FC = () => {
         </div>
         <div className={styles.userInfo}>
           <h2>{userData.username}</h2>
-          <p>Followers: {userData.followers}</p>
-          <p>Following: {userData.following}</p>
+          <a href='/followers'><p>Followers: {userData.followers}</p></a>
+          <a href='/followings'><p>Following: {userData.following}</p></a>
           <p>Bio: {userData.bio}</p>
         </div>
       </div>

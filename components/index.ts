@@ -5,5 +5,7 @@ import Videos from './Videos';
 import Profile from './Profile';
 import Explore from './Explore';
 import Create from './Create'
+import Followers from './Followers';
+import Following from './Following';
 
-export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create };
+export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create, Followers, Following };
