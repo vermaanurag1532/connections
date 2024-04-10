@@ -4,6 +4,7 @@ import { auth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup }
 import styles from './Auth.module.css'; // Import the CSS file
 import { collection, doc, setDoc, getFirestore, DocumentData , getDoc } from 'firebase/firestore';
 import { User } from '../../firebase/Models/User';
+import { Request } from '@/firebase/Models/requests';
 
 const db = getFirestore();
 
@@ -12,22 +13,13 @@ const Auth: React.FC = () => {
   const [password, setPassword] = useState('');
   const [user, loading, error] = useAuthState(auth); 
 
-  const handleEmailLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect or show the main content upon successful login
-    } catch (error) {
-      console.error('Error signing in with email/password:', (error as Error).message);
-    }
-  };
-
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
 
       // Check if the user exists in the Firestore database
-      const userId = result.user!.uid; // Use the authentication ID (UID) instead of email
+      const userId = result.user!.uid;
       const userDoc = doc(db, 'users', userId);
       const userSnap = await getDoc(userDoc);
 
@@ -39,15 +31,15 @@ const Auth: React.FC = () => {
           dateOfBirth: "",
           designation: "Member",
           easyQuestions: 0,
-          email: result.user!.email || "", // Use the retrieved email here
+          email: result.user!.email || "",
           follower: 0,
           following: 0,
           gender: "",
           hardQuestions: 0,
           id: userId,
           image: result.user!.photoURL || "",
-          isApproved: true,
-          isContentCreator: true,
+          isApproved: false,
+          isContentCreator: false,
           is_online: false,
           last_active: Date.now().toString(),
           lives: 0,
@@ -57,14 +49,37 @@ const Auth: React.FC = () => {
           place: "",
           profession: "",
           push_token: ""
+
         };
 
         await setDoc(userDoc, newUser);
 
-        console.log('New User Created:', newUser); // Log the newly created user model
       } else {
         const existingUser = userSnap.data() as User;
-        console.log('Existing User:', existingUser); // Log the existing user model
+        console.log(userId);
+        
+      }
+
+      const requestDoc = doc(db , 'requests', userId)
+      const requestSnap = await getDoc(requestDoc);
+
+      if(!requestSnap.exists()) {
+        const newRequest: Request = {
+          instagramLink: "",
+          isApproved: false,
+          isContentCreator: false,
+          timeStamp: new Date(),
+          userId: userId,
+          youtubeLink: "",
+        }
+
+        await setDoc(requestDoc , newRequest);
+        console.log("request Created");
+      }
+      else {
+        const existingRequest = requestSnap.data() as Request;
+        console.log(userId);
+        
       }
 
       // Redirect or show the main content upon successful login
@@ -87,7 +102,7 @@ const Auth: React.FC = () => {
           <div className={styles.inputGroup}>
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <button className={styles.button} onClick={handleEmailLogin}>Login with Email</button>
+          <button className={styles.button} >Login with Email</button>
           <button className={styles.button} onClick={handleGoogleLogin}>Login with Google</button>
           <div className={styles.bottomLinks}>
             <span className={styles.forgotPassword}>Forgot Password?</span>

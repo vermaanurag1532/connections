@@ -1,5 +1,3 @@
-// Explore.tsx
-
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, getFirestore, DocumentData } from 'firebase/firestore';
 import { app } from '../../firebase/Config/firebase';
@@ -91,7 +89,7 @@ const Explore = () => {
         </button>
       </div>
       <div className={styles.clickedProfile}>
-      {selectedUserUid && <UsersProfile uid={selectedUserUid} onClose={handleCloseProfile} />}
+      {selectedUserUid && <UsersProfile ProfileUserId={selectedUserUid} onClose={handleCloseProfile} />}
       </div>
       <div>
         {searchQuery.trim() !== '' && (

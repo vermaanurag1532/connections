@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './LoopsSections.module.css';
 import { app } from '../../firebase/Config/firebase';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
@@ -18,7 +18,6 @@ const LoopsSections: React.FC = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -31,17 +30,14 @@ const LoopsSections: React.FC = () => {
           throw new Error('No videos found.');
         }
 
-        const fetchedVideos: Video[] = loopsSnapshot.docs.map(doc => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            url: data.videoUrl,
-            uploadedBy: data.uploadedBy,
-            title: data.title,
-            description: data.description,
-            thumbnail: data.thumbnail,
-          };
-        }).filter(video => video.url);
+        const fetchedVideos: Video[] = loopsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          url: doc.data().videoUrl,
+          uploadedBy: doc.data().uploadedBy,
+          title: doc.data().title,
+          description: doc.data().description,
+          thumbnail: doc.data().thumbnail,
+        }));
 
         setVideos(fetchedVideos);
       } catch (err) {
@@ -55,30 +51,17 @@ const LoopsSections: React.FC = () => {
     fetchVideos();
   }, []);
 
-  const handleVideoClick = (video: Video) => {
-    setSelectedVideo(video);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedVideo(null);
-  };
-
-  if (loading) {
-    return <div>Loading videos...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Loading videos...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className={styles.container}>
-      {videos.map((video, index) => (
+      {videos.map((video) => (
         <div key={video.id} className={styles.videoWrapper}>
-          <div className={styles.videoThumbnail} onClick={() => handleVideoClick(video)}>
-            <img src={video.thumbnail} alt={video.title} />
-            <div className={styles.playIcon}></div>
-          </div>
+          <video className={styles.videoPlayer} controls>
+            <source src={video.url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           <div className={styles.info}>
             <h4>{video.title}</h4>
             <p>{video.uploadedBy}</p>
@@ -86,25 +69,6 @@ const LoopsSections: React.FC = () => {
           </div>
         </div>
       ))}
-
-      {selectedVideo && (
-        <div className={styles.modalBackdrop} onClick={handleCloseModal}>
-          <div className={styles.modal}>
-            <video
-              controls
-              autoPlay
-              className={styles.modalVideoPlayer}
-              poster={selectedVideo.thumbnail}
-            >
-              <source src={selectedVideo.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <button className={styles.closeModal} onClick={handleCloseModal}>
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

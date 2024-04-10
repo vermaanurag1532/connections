@@ -3,15 +3,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll; /* Allows vertical scrolling */
+ /* Allows vertical scrolling */
   padding: 20px;
   gap: 20px;
   height: 70%; /* Adjust height based on the header */
-  scroll-snap-type: y mandatory; /* Enables snap scrolling */
+/* Enables snap scrolling */
   z-index: -1;
 }
 
 .videoWrapper {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
   position: relative;
   box-shadow: 0 2px 8px rgba(177, 176, 176, 0.2);
   width: 100%; /* Full width of the container */
