@@ -1,0 +1,41 @@
+/* components/UploadSection.module.css */
+.uploadStack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .uploadText {
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    font-size: 24px; /* Adjust size as necessary */
+  }
+  
+  .uploadDivider {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
+  .fileInput {
+    margin-bottom: 10px;
+    width: 80%; /* Adjust width as necessary */
+    padding: 5px;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+  }
+  
+  .uploadButton {
+    background-color: #228be6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .uploadButton:hover {
+    background-color: #1971c2;
+  }
+  

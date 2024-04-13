@@ -27,14 +27,14 @@ const UsersProfile: React.FC<UsersProfileProps> = ({ ProfileUserId, onClose }) =
         const userDocSnapshot = await getDoc(userDocRef);
         if (userDocSnapshot.exists()) {
           setUserData(userDocSnapshot.data());
-          const followerQuerySnapshot = await getDocs(collection(userDocRef, 'followers'));
+          const followerQuerySnapshot = await getDocs(collection(userDocRef, 'follower'));
           setFollowerCount(followerQuerySnapshot.size);
           const followingQuerySnapshot = await getDocs(collection(userDocRef, 'following'));
           setFollowingCount(followingQuerySnapshot.size);
           
           // Check if the current user is following the profile user
           if (UserId) {
-            const isFollowingRef = doc(db, 'users', ProfileUserId, 'followers', UserId);
+            const isFollowingRef = doc(db, 'users', ProfileUserId, 'follower', UserId);
             const isFollowingSnap = await getDoc(isFollowingRef);
             setIsFollowing(isFollowingSnap.exists());
           }
@@ -60,7 +60,7 @@ const UsersProfile: React.FC<UsersProfileProps> = ({ ProfileUserId, onClose }) =
         await setDoc(doc(db, 'users', UserId, 'following', ProfileUserId), {
           timeStamp: new Date(),
         });
-        await setDoc(doc(db, 'users', ProfileUserId, 'followers', UserId), {
+        await setDoc(doc(db, 'users', ProfileUserId, 'follower', UserId), {
           timeStamp: new Date(),
         });
         setFollowerCount(prev => prev + 1);
