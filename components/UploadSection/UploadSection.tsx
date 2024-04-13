@@ -16,10 +16,11 @@ const UploadSection = () => {
       <h2 className={styles.uploadText}>Upload your content</h2>
       
       <hr className={styles.uploadDivider} />
+      <a href="/uploadVideos">
       <button onClick={() => console.log("Upload Video")} className={styles.uploadButton}>
         Upload Video
       </button>
-
+      </a>
       <hr className={styles.uploadDivider} />
       <a href="/uploadLoops">
       <button onClick={() => console.log("Upload Loop")} className={styles.uploadButton}>

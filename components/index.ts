@@ -9,5 +9,6 @@ import Followers from './Followers';
 import Following from './Following';
 import UploadSection from './UploadSection';
 import UploadLoops from './UploadLoops';
+import UploadVideos from './UploadVideos';
 
-export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create, Followers, Following, UploadSection, UploadLoops };
+export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create, Followers, Following, UploadSection, UploadLoops, UploadVideos };

@@ -1,0 +1,101 @@
+/* UploadLoops.module.css */
+
+.uploadStack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #121212; /* Dark background */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .uploadText {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .inputField,
+  .textArea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #333333;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  
+  .inputField::placeholder,
+  .textArea::placeholder {
+    color: #aaaaaa;
+  }
+  
+  .fileInput {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #333333;
+  }
+  
+  .uploadButton {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #0a84ff; /* A blue that stands out on the dark background */
+    color: #ffffff;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .uploadButton:hover,
+  .uploadButton:focus {
+    background-color: #005ecb; /* A darker shade for hover state */
+  }
+  
+  .uploadButton:disabled {
+    background-color: #303030; /* A greyed out state to indicate disabled */
+    cursor: not-allowed;
+  }
+
+  /* UploadLoops.module.css */
+
+.dropdown {
+    width: 100%;  /* Ensures the dropdown fills the container */
+    padding: 0.75rem; /* Padding to make it visually consistent with inputs */
+    margin-bottom: 1rem; /* Space below the dropdown */
+    background-color: #1e1e1e; /* Dark background for the dropdown */
+    color: #ffffff; /* Text color for the dropdown items */
+    border: 1px solid #333333; /* Slight border to define the edges */
+    border-radius: 4px; /* Rounded corners like the input fields */
+    appearance: none; /* Removes default system styling */
+    cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+
+    /* Custom arrow using a background image, this is optional */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center; /* Positions the arrow to the right */
+    background-size: 1.5rem; /* Size of the background arrow image */
+}
+
+/* Styles for when the dropdown is focused or hovered */
+.dropdown:focus,
+.dropdown:hover {
+    border-color: #0a84ff; /* Highlight border on focus/hover */
+    outline: none; /* Removes the default focus outline */
+}
+
+/* Additional styles to improve the dropdown's appearance on different platforms */
+.dropdown::-ms-expand {
+    display: none; /* Hides the default arrow icon in IE */
+}
+
+  
