@@ -1,3 +1,4 @@
+// components/LoopsSections.jsx
 import React, { useEffect, useState } from 'react';
 import styles from './LoopsSections.module.css';
 import { app } from '../../firebase/Config/firebase';
@@ -7,7 +8,7 @@ const db = getFirestore(app);
 
 interface Video {
   id: string;
-  url: string;
+  videoUrl: string;
   uploadedBy: string;
   title: string;
   description: string;
@@ -32,8 +33,8 @@ const LoopsSections: React.FC = () => {
 
         const fetchedVideos: Video[] = loopsSnapshot.docs.map(doc => ({
           id: doc.id,
-          url: doc.data().videoUrl,
-          uploadedBy: doc.data().uploadedBy,
+          videoUrl: doc.data().videoUrl,
+          uploadedBy: doc.data().creatorName,
           title: doc.data().title,
           description: doc.data().description,
           thumbnail: doc.data().thumbnail,
@@ -58,8 +59,14 @@ const LoopsSections: React.FC = () => {
     <div className={styles.container}>
       {videos.map((video) => (
         <div key={video.id} className={styles.videoWrapper}>
-          <video className={styles.videoPlayer} controls>
-            <source src={video.url} type="video/mp4" />
+          <video 
+            className={styles.videoPlayer} 
+            controls 
+            autoPlay 
+            muted 
+            playsInline
+          >
+            <source src={video.videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className={styles.info}>

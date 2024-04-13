@@ -21,9 +21,11 @@ const UploadSection = () => {
       </button>
 
       <hr className={styles.uploadDivider} />
+      <a href="/uploadLoops">
       <button onClick={() => console.log("Upload Loop")} className={styles.uploadButton}>
         Upload Loop
       </button>
+      </a>
     </div>
   );
 };
