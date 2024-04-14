@@ -1,0 +1,58 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tab:hover {
+    color: #777;
+  }
+  
+  .active {
+    color: #777;
+    border-bottom: 2px solid #000;
+  }
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 7px;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+  }
+  
+  .item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    display: flex;
+  }
+  
+  .item h3 {
+    margin: 0 0 5px 0;
+  }
+  
+  .item p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+  

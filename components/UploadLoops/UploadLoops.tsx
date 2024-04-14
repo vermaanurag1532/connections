@@ -1,4 +1,3 @@
-// components/UploadLoops.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { doc, setDoc, getFirestore, getDoc } from 'firebase/firestore';
@@ -20,18 +19,13 @@ const UploadLoops = () => {
 
   // Fetch the user's name from Firestore when the user state is available
   useEffect(() => {
-    const fetchUserName = async () => {
-      if (user) {
-        const userRef = doc(db, 'users', user.uid);
-        const userSnap = await getDoc(userRef);
+    if (user && !loading) {
+      const userRef = doc(db, 'users', user.uid);
+      getDoc(userRef).then((userSnap) => {
         if (userSnap.exists()) {
           setUserName(userSnap.data().name);
         }
-      }
-    };
-
-    if (!loading && user) {
-      fetchUserName();
+      });
     }
   }, [user, loading]);
 
@@ -48,38 +42,32 @@ const UploadLoops = () => {
     setUploading(true);
 
     try {
-      const apiKey = 'LJd5487BMFq2YdiDxjNWeoJBPY3eqm3M0YHiw1qj7g6'; // Replace with your api.video API key
-
-      // Create a video entity on api.video
-      const createResponse = await axios.post(
-        'https://sandbox.api.video/videos',
-        { title, description },
-        { headers: { 'Authorization': `Bearer ${apiKey}` } }
-      );
-
-      // Upload the video file
+      const apiKey = 'LJd5487BMFq2YdiDxjNWeoJBPY3eqm3M0YHiw1qj7g6';
+      const createResponse = await axios.post('https://sandbox.api.video/videos', { title, description }, { headers: { 'Authorization': `Bearer ${apiKey}` } });
       const videoId = createResponse.data.videoId;
+
       const formData = new FormData();
       formData.append('file', videoFile);
-      await axios.post(
-        `https://sandbox.api.video/videos/${videoId}/source`,
-        formData,
-        { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'multipart/form-data' } }
-      );
+      await axios.post(`https://sandbox.api.video/videos/${videoId}/source`, formData, { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'multipart/form-data' } });
 
-      // Store video data in Firestore under the 'loops' collection
-      await setDoc(doc(db, 'loops', videoId), {
+      const videoData = {
         id: videoId,
-        category: 'your-category', // Replace with the actual category
+        category: 'your-category',
         creatorName: userName,
         title,
         description,
         videoUrl: createResponse.data.assets.mp4,
         thumbnail: createResponse.data.assets.thumbnail,
-        uploadedBy: user?.uid, // Use the auth user's ID
+        uploadedBy: user!.uid,
         likes: [],
         views: 0,
-      });
+      };
+
+      // Store in general loops collection
+      await setDoc(doc(db, 'loops', videoId), videoData);
+
+      // Store in user-specific loops collection
+      await setDoc(doc(db, `users/${user!.uid}/loops`, videoId), videoData);
 
       alert('Video uploaded successfully!');
     } catch (error) {
@@ -90,43 +78,13 @@ const UploadLoops = () => {
     }
   };
 
-  if (error) {
-    return <div>Error loading user data</div>;
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className={styles.uploadStack}>
       <h2 className={styles.uploadText}>Upload your content</h2>
-      <input
-        className={styles.inputField}
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={handleTitleChange}
-      />
-      <textarea
-        className={styles.textArea}
-        placeholder="Description"
-        value={description}
-        onChange={handleDescriptionChange}
-      />
-      <input
-        className={styles.fileInput}
-        type="file"
-        accept="video/*"
-        onChange={handleVideoChange}
-      />
-      <button
-        className={styles.uploadButton}
-        onClick={handleUpload}
-        disabled={uploading}
-      >
-        {uploading ? 'Uploading...' : 'Upload Video'}
-      </button>
+      <input className={styles.inputField} type="text" placeholder="Title" value={title} onChange={handleTitleChange} />
+      <textarea className={styles.textArea} placeholder="Description" value={description} onChange={handleDescriptionChange} />
+      <input className={styles.fileInput} type="file" accept="video/*" onChange={handleVideoChange} />
+      <button className={styles.uploadButton} onClick={handleUpload} disabled={uploading}>{uploading ? 'Uploading...' : 'Upload Video'}</button>
     </div>
   );
 };

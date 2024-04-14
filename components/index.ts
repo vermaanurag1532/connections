@@ -10,5 +10,6 @@ import Following from './Following';
 import UploadSection from './UploadSection';
 import UploadLoops from './UploadLoops';
 import UploadVideos from './UploadVideos';
+import Posts from './Posts';
 
-export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create, Followers, Following, UploadSection, UploadLoops, UploadVideos };
+export { Layout, LoopsSection, SplashScreen, Videos, Profile, Explore, Create, Followers, Following, UploadSection, UploadLoops, UploadVideos, Posts };

@@ -62,6 +62,7 @@ const Create = () => {
         instagramLink: instagramLink,
         youtubeLink: youtubeLink,
         isApproved: true,
+        userId: uid,
       });
 
       setStatusMessage('Your application is under review by WHILE.');

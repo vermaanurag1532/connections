@@ -3,6 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, app } from '../../firebase/Config/firebase';
 import styles from './Profile.module.css';
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import Posts from '../Posts';
 
 const db = getFirestore(app);
 
@@ -11,6 +12,7 @@ const Profile: React.FC = () => {
   const [userData, setUserData] = useState({
     username: '',
     profilePic: '',
+    posts: 0,
     followers: 0,
     following: 0,
     bio: 'We are welcoming you in WHILE',
@@ -46,6 +48,13 @@ const Profile: React.FC = () => {
               const followingQuery = await getDocs(collection(userDocRef , 'following'));
               const followingCount = followingQuery.size;
               setUserData(prevState => ({ ...prevState, following: followingCount }));
+
+              const videosQuery = await getDocs(collection(userDocRef , 'videos'));
+              const videosCount = videosQuery.size;
+
+              const loopsQuery = await getDocs(collection(userDocRef , 'loops'));
+              const loopsCount = loopsQuery.size;
+              setUserData(prevState => ({...prevState, posts: videosCount+loopsCount}));
             }
           } else {
             console.log('User data not found in Firestore for UID:', uid);
@@ -66,19 +75,33 @@ const Profile: React.FC = () => {
     }
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className={styles.container}>
-      <div className={styles.profileInfo}>
-        <div className={styles.profilePicContainer}>
-          <img src={userData.profilePic} alt="Profile" className={styles.profilePic} />
+      <div className={styles.profileHeader}>
+        <img src={userData.profilePic} alt="Profile avatar" className={styles.avatar}/>
+        <div className={styles.profileDetails}>
+          <h1 className={styles.username}>{userData.username}</h1>
+          <p className={styles.bio}>{userData.bio}</p>
         </div>
-        <div className={styles.userInfo}>
-          <h2>{userData.username}</h2>
-          <a href='/followers'><p>Followers: {userData.followers}</p></a>
-          <a href='/followings'><p>Following: {userData.following}</p></a>
-          <p>Bio: {userData.bio}</p>
+        <div className={styles.profileStats}>
+          <div className={styles.statItem}>
+            <strong>{userData.posts}</strong>
+             posts
+          </div>
+          <div className={styles.statItem} onClick={() => window.location.href='/followers'}>
+            <strong>{userData.followers}</strong>
+            followers
+          </div>
+          <div className={styles.statItem} onClick={() => window.location.href='/following'}>
+            <strong>{userData.following}</strong>
+            following
+          </div>
         </div>
       </div>
+      <Posts />
     </div>
   );
 };

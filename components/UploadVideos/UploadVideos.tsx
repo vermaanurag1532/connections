@@ -82,8 +82,7 @@ const UploadLoops: React.FC = () => {
       );
 
       // Store the video under videos/{category}/{categoryId}
-      const categoryRef = collection(db, `videos/${selectedCategory}/${selectedCategory}`);
-      await setDoc(doc(categoryRef, videoId), {
+      const videoData = {
         id: videoId,
         category: selectedCategory,
         creatorName: userName,
@@ -94,7 +93,10 @@ const UploadLoops: React.FC = () => {
         uploadedBy: user?.uid,
         likes: [],
         views: 0
-      });
+      }
+      const categoryRef = collection(db, `videos/${selectedCategory}/${selectedCategory}`);
+      await setDoc(doc(categoryRef, videoId), videoData);
+      await setDoc(doc(db , `users/${user!.uid}/videos`, videoId), videoData);
 
       alert('Video uploaded successfully!');
     } catch (error) {
