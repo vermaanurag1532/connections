@@ -3,6 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, app } from '../../firebase/Config/firebase';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import styles from './Posts.module.css';
+import VideoModal from '@/widgets/VideoModal/VideoModal';
 
 const db = getFirestore(app);
 
@@ -11,6 +12,7 @@ const Posts = () => {
     const [activeTab, setActiveTab] = useState('loops');
     const [loops, setLoops] = useState([]);
     const [videos, setVideos] = useState([]);
+    const [selectedVideoId, setSelectedVideoId] = useState(null);  // State to track the selected video ID
 
     useEffect(() => {
         if (user) {
@@ -26,7 +28,7 @@ const Posts = () => {
             id: doc.id,
             title: doc.data().title,
             description: doc.data().description,
-            thumbnail: doc.data().thumbnail  // Assuming 'thumbnail' is a field in your document
+            thumbnail: doc.data().thumbnail
         }));
 
         if (type === 'loops') {
@@ -40,6 +42,14 @@ const Posts = () => {
         setActiveTab(tab);
     };
 
+    const handleItemClick = (id) => {
+        setSelectedVideoId(id);  // Set the video ID when an item is clicked
+    };
+
+    const handleCloseModal = () => {
+        setSelectedVideoId(null);  // Reset the video ID to close the modal
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.tabs}>
@@ -49,7 +59,7 @@ const Posts = () => {
             </div>
             <div className={styles.content}>
                 {(activeTab === 'loops' ? loops : videos).map(item => (
-                    <div key={item.id} className={styles.item}>
+                    <div key={item.id} className={styles.item} onClick={() => handleItemClick(item.id)}>
                         <div>
                             <img src={item.thumbnail} alt="Thumbnail" className={styles.thumbnail} />
                         </div>
@@ -60,6 +70,9 @@ const Posts = () => {
                     </div>
                 ))}
             </div>
+            {selectedVideoId && (
+                <VideoModal videoId={selectedVideoId} onClose={handleCloseModal} selectedTab={activeTab} />
+            )}
         </div>
     );
 };
