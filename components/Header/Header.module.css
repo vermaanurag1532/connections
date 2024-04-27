@@ -37,7 +37,7 @@
 
 .sidebar ul li {
   padding: 0.5rem;
-  margin-top: 20%;
+  margin-top: 15%;
 }
 
 .sidebar ul li a {
@@ -49,9 +49,9 @@
 .bottomNavbar {
   display: none; /* Hide both top and bottom navbars by default */
   width: 100%;
-  background-color: #333;
   position: fixed;
   z-index: 1000;
+  background-color: black;
 }
 
 .topNavbar {
@@ -87,19 +87,28 @@
   }
 
   .logo img {
-      width: 100px;
+      width: 150px;
+      margin-left: -30px;
     }
 
-  .topNavbar,
-  .bottomNavbar {
+  .topNavbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
   .hamburger {
-    display: block;
+    display: none;
     cursor: pointer;
     padding: 1rem;
+  }
+
+  .bottomNavbar {
+    display: flex;
+    padding-left: 2%;
+  }
+
+  .bottomNavbar ul li{
+    margin-right: 12%;
   }
 }

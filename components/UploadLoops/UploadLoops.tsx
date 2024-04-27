@@ -42,13 +42,13 @@ const UploadLoops = () => {
     setUploading(true);
 
     try {
-      const apiKey = 'LJd5487BMFq2YdiDxjNWeoJBPY3eqm3M0YHiw1qj7g6';
-      const createResponse = await axios.post('https://sandbox.api.video/videos', { title, description }, { headers: { 'Authorization': `Bearer ${apiKey}` } });
+      const apiKey = '6Rdwzgfec9nfQmGXn523qoQiuKHhuDCO0o31bcis2Da';
+      const createResponse = await axios.post('https://ws.api.video/videos', { title, description }, { headers: { 'Authorization': `Bearer ${apiKey}` } });
       const videoId = createResponse.data.videoId;
 
       const formData = new FormData();
       formData.append('file', videoFile);
-      await axios.post(`https://sandbox.api.video/videos/${videoId}/source`, formData, { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'multipart/form-data' } });
+      await axios.post(`https://ws.api.video/videos/${videoId}/source`, formData, { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'multipart/form-data' } });
 
       const videoData = {
         id: videoId,

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { auth } from '../../firebase/Config/firebase'; // Import Firebase authentication
+import { auth } from '../../firebase/Config/firebase';
 import styles from './Header.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faCompass, faPlusSquare, faUser, faSignOutAlt, faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -12,8 +14,7 @@ const Header: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            await auth.signOut(); // Sign out the user using Firebase authentication
-            // You can add additional logic here such as clearing local storage, redirecting, etc.
+            await auth.signOut();
             console.log("Logged out successfully");
         } catch (error) {
             console.error('Error logging out:', (error as Error).message);
@@ -32,31 +33,31 @@ const Header: React.FC = () => {
                 <ul>
                     <li>
                         <Link href="/">
-                            Home
+                            <FontAwesomeIcon icon={faHome} /> Home
                         </Link>
                     </li>
                     <li>
                         <Link href="/loops">
-                            Loops
+                            <FontAwesomeIcon icon={faCompass} /> Loops
                         </Link>
                     </li>
                     <li>
                         <Link href="/explore">
-                            Explore
+                            <FontAwesomeIcon icon={faCompass} /> Explore
                         </Link>
                     </li>
                     <li>
                         <Link href="/create">
-                            Create
+                            <FontAwesomeIcon icon={faPlusSquare} /> Create
                         </Link>
                     </li>
                     <li>
                         <Link href="/profile">
-                            Profile
+                            <FontAwesomeIcon icon={faUser} /> Profile
                         </Link>
                     </li>
                     <li>
-                        <a href="#" onClick={handleLogout}>Logout</a>
+                        <a href="#" onClick={handleLogout}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -75,40 +76,35 @@ const Header: React.FC = () => {
                 <ul>
                     <li>
                         <Link href="/">
-                            Home
+                            <FontAwesomeIcon icon={faHome} /> 
                         </Link>
                     </li>
                     <li>
                         <Link href="/loops">
-                            Loops
+                            <FontAwesomeIcon icon={faCompass} /> 
                         </Link>
                     </li>
                     <li>
                         <Link href="/explore">
-                            Explore
+                            <FontAwesomeIcon icon={faCompass} /> 
                         </Link>
                     </li>
                     <li>
                         <Link href="/create">
-                            Create
+                            <FontAwesomeIcon icon={faPlusSquare} /> 
                         </Link>
                     </li>
                     <li>
                         <Link href="/profile">
-                            Profile
+                            <FontAwesomeIcon icon={faUser} /> 
                         </Link>
-                    </li>
-                    <li>
-                        <a href="#" onClick={handleLogout}>Logout</a>
                     </li>
                 </ul>
             </nav>
 
             {/* Hamburger Menu for small screens */}
             <div className={styles.hamburger} onClick={toggleSidebar}>
-                <div className={styles.line}></div>
-                <div className={styles.line}></div>
-                <div className={styles.line}></div>
+                <FontAwesomeIcon icon={faBars} className={styles.line} />
             </div>
         </header>
     );
